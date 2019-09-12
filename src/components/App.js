@@ -5,6 +5,7 @@ import MainPage from './MainPage';
 import FolderRoute from './FolderRoute';
 import NotFoundPage from './NotFoundPage';
 import Note from './Note'
+import Context from './Context'
 
 class App extends React.Component {
   state = {
@@ -12,39 +13,43 @@ class App extends React.Component {
     notes: this.props.store.notes
   }
   render() {
+    const value = {
+      notes: this.state.notes,
+      folders: this.state.folders
+    }
     return (
-      <div className="App">
-        <Switch>
-          <Route
-          exact path='/'
-          render={()=><MainPage 
-            folders ={this.state.folders}
-            notes = {this.state.notes}
-          />}
-          />
-          <Route
-          exact path='/folder/:folderId'
-          render={(routeProps)=><FolderRoute 
-            folders ={this.state.folders}
-            notes = {this.state.notes}
-            {...routeProps}
-          />}
-          />
-           <Route
-          exact path='/note/:noteId'
-          render={(routeProps)=><Note
-            folders ={this.state.folders}
-            notes = {this.state.notes}
-            {...routeProps}
-          />}
-          />
-          <Route component={NotFoundPage}/>
-        </Switch>
-        
-      </div>
+      <Context.Provider value={value}>
+        <div className="App">
+          <Switch>
+            <Route
+              exact path='/'
+              render={() => <MainPage
+                folders={this.state.folders}
+                notes={this.state.notes}
+              />}
+            />
+            <Route
+              exact path='/folder/:folderId'
+              render={(routeProps) => <FolderRoute
+                folders={this.state.folders}
+                notes={this.state.notes}
+                {...routeProps}
+              />}
+            />
+            <Route
+              exact path='/note/:noteId'
+              render={(routeProps) => <Note
+                folders={this.state.folders}
+                notes={this.state.notes}
+                {...routeProps}
+              />}
+            />
+            <Route component={NotFoundPage} />
+          </Switch>
+        </div>
+      </Context.Provider>
     );
   }
-  
 }
 
 export default App;

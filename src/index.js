@@ -6,6 +6,11 @@ import dummyStore from './dummyStore'
 import App from './components/App';
 
 
-ReactDOM.render(<BrowserRouter><App store={dummyStore}/></BrowserRouter>, document.getElementById('root'));
+ReactDOM.render(
+    <BrowserRouter>
+        <App store={dummyStore} />
+    </BrowserRouter>,
+    document.getElementById('root')
+);
 
 

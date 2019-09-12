@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 export default function Header() {
 	return (
-			<h1>
-					<Link exact to='/'>Noteful</Link>
-			</h1>   
+		<h1>
+			<Link to='/'>Noteful</Link>
+		</h1>   
 	);
 }
