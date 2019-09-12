@@ -8,9 +8,10 @@ export default class Note extends React.Component {
 
   handleDeleteButton = e => {
     const baseUrl = "http://localhost:9090";
-
+    console.log(this.props)
     e.preventDefault();
-    const noteId = this.props.id;
+    const noteId = this.props.match.params.noteId;
+    console.log(noteId)
 
     fetch(`${baseUrl}/notes/${noteId}`, {
       method: "DELETE",
@@ -25,7 +26,9 @@ export default class Note extends React.Component {
       return response.json();
     })
     .then(() => {
+      this.props.history.push('/')
       this.context.deleteNote(noteId)
+      
     })
     .catch(error => {
       console.log({error})
