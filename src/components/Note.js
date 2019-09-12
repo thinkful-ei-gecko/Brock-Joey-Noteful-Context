@@ -18,6 +18,7 @@ export default class Note extends React.Component {
         <p>{new Date(note.modified).toDateString()}</p>
         <p>{selectedFolder.name}</p>
         <button><Link to='/'>Go Back</Link></button>
+        <button>Delete</button>
       </main>
     )
   }
