@@ -9,14 +9,40 @@ import Context from './Context'
 
 class App extends React.Component {
   state = {
-    folders: this.props.store.folders,
-    notes: this.props.store.notes
-  }
+    folders: [],
+    notes: []
+  };
+  componentDidMount(){
+  
+    const baseUrl = 'http://localhost:9090'
+
+    Promise.all([fetch(`${baseUrl}/notes`),fetch(`${baseUrl}/folders`)])
+    .then(([notesResponse, foldersResponse])=>{
+      if(!notesResponse.ok){ 
+        return notesResponse.json().then(e => Promise.reject(e))
+      
+      }
+      if(!foldersResponse.ok){ 
+        return foldersResponse.json().then(e => Promise.reject(e))
+      
+      }
+      return Promise.all([notesResponse.json(), foldersResponse.json()])
+      
+    }).then(([notes,folders]) => {
+      this.setState({
+        notes,
+        folders,
+      })
+    }).catch(e => console.log(e))
+      
+  
+    }
   render() {
     const value = {
       notes: this.state.notes,
       folders: this.state.folders
     }
+    console.log(value)
     return (
       <Context.Provider value={value}>
         <div className="App">
